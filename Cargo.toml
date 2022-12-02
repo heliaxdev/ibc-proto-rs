@@ -33,7 +33,8 @@ base64      = { version = "0.13", default-features = false, features = ["alloc"]
 flex-error = { version = "0.4.4", default-features = false }
 
 [dependencies.tendermint-proto]
-version          = "0.27"
+git = "https://github.com/heliaxdev/tendermint-rs"
+rev = "a2cd889ae706854e7bf476880a37408d75b4a8e1"
 default-features = false
 
 [features]
