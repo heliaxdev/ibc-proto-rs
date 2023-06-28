@@ -38,7 +38,7 @@ borsh = {version = "0.10.0", default-features = false, optional = true }
 
 [dependencies.tendermint-proto]
 git = "https://github.com/heliaxdev/tendermint-rs"
-rev = "becb27564c143f9a1e64d85cfe80a6dac1acce33"
+rev = "2b007eeecb9e2b3d78a858ddf407328d83ac9ec3"
 default-features = false
 
 [features]
