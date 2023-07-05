@@ -45,7 +45,8 @@ scale-info         = { version = "2.1.2", default-features = false, features = [
 borsh = { version = "0.10.0", default-features = false, optional = true }
 
 [dependencies.tendermint-proto]
-version          = "0.31"
+git = "https://github.com/heliaxdev/tendermint-rs"
+rev = "b7d1e5afc6f2ccb3fd1545c2174bab1cc48d7fa7"
 default-features = false
 
 [features]
