@@ -32,6 +32,11 @@ pub struct CompileCmd {
 
 impl CompileCmd {
     pub fn run(&self) {
+        Self::patch_nft_packet_file(self.nft.as_ref()).unwrap_or_else(|e| {
+            eprintln!("[error] failed to patch NFT proto file: {}", e);
+            process::exit(1);
+        });
+
         Self::compile_ibc_protos(
             self.ibc.as_ref(),
             self.sdk.as_ref(),
@@ -55,6 +60,28 @@ impl CompileCmd {
         });
 
         println!("[info ] Done!");
+    }
+
+    fn patch_nft_packet_file(nft_dir: &Path) -> Result<(), Box<dyn std::error::Error>> {
+        println!("[info ] Patching NFT packet proto file...");
+
+        let path = nft_dir.join("ibc/applications/nft_transfer/v1/packet.proto");
+        let original = std::fs::read_to_string(&path)?;
+
+        let re = regex::Regex::new(r"(\npackage .+;)").unwrap();
+        let patched = re.replace_all(&original, "$1\nimport \"gogoproto/gogo.proto\";");
+
+        let re = regex::Regex::new(
+            r"(string (class_uri|class_data|token_uris|token_data|memo) = \d+);",
+        )?;
+        let patched = re
+            .replace_all(&patched, "$1 [(gogoproto.nullable) = false];")
+            .to_string();
+
+        let diff = TextDiff::from_lines(&original, &patched);
+        println!("{}", diff.unified_diff().context_radius(3));
+
+        Ok(std::fs::write(&path, patched)?)
     }
 
     fn compile_ibc_protos(
