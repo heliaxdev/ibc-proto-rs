@@ -72,10 +72,10 @@ impl CompileCmd {
         let patched = re.replace_all(&original, "$1\nimport \"gogoproto/gogo.proto\";");
 
         let re = regex::Regex::new(
-            r"(string (class_uri|class_data|token_uris|token_data|memo) = \d+);",
+            r"(string (class_uri|class_data|memo) = \d+);",
         )?;
         let patched = re
-            .replace_all(&patched, "$1 [(gogoproto.nullable) = false];")
+            .replace_all(&patched, "optional $1 [(gogoproto.nullable) = false];")
             .to_string();
 
         let diff = TextDiff::from_lines(&original, &patched);

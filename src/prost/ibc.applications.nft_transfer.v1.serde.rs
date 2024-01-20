@@ -781,11 +781,11 @@ impl serde::Serialize for NonFungibleTokenPacketData {
         if true {
             struct_ser.serialize_field("classId", &self.class_id)?;
         }
-        if true {
-            struct_ser.serialize_field("classUri", &self.class_uri)?;
+        if let Some(v) = self.class_uri.as_ref() {
+            struct_ser.serialize_field("classUri", v)?;
         }
-        if true {
-            struct_ser.serialize_field("classData", &self.class_data)?;
+        if let Some(v) = self.class_data.as_ref() {
+            struct_ser.serialize_field("classData", v)?;
         }
         if true {
             struct_ser.serialize_field("tokenIds", &self.token_ids)?;
@@ -802,8 +802,8 @@ impl serde::Serialize for NonFungibleTokenPacketData {
         if true {
             struct_ser.serialize_field("receiver", &self.receiver)?;
         }
-        if true {
-            struct_ser.serialize_field("memo", &self.memo)?;
+        if let Some(v) = self.memo.as_ref() {
+            struct_ser.serialize_field("memo", v)?;
         }
         struct_ser.end()
     }
@@ -913,13 +913,13 @@ impl<'de> serde::Deserialize<'de> for NonFungibleTokenPacketData {
                             if class_uri__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classUri"));
                             }
-                            class_uri__ = Some(map_.next_value()?);
+                            class_uri__ = map_.next_value()?;
                         }
                         GeneratedField::ClassData => {
                             if class_data__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classData"));
                             }
-                            class_data__ = Some(map_.next_value()?);
+                            class_data__ = map_.next_value()?;
                         }
                         GeneratedField::TokenIds => {
                             if token_ids__.is_some() {
@@ -955,20 +955,20 @@ impl<'de> serde::Deserialize<'de> for NonFungibleTokenPacketData {
                             if memo__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("memo"));
                             }
-                            memo__ = Some(map_.next_value()?);
+                            memo__ = map_.next_value()?;
                         }
                     }
                 }
                 Ok(NonFungibleTokenPacketData {
                     class_id: class_id__.unwrap_or_default(),
-                    class_uri: class_uri__.unwrap_or_default(),
-                    class_data: class_data__.unwrap_or_default(),
+                    class_uri: class_uri__,
+                    class_data: class_data__,
                     token_ids: token_ids__.unwrap_or_default(),
                     token_uris: token_uris__.unwrap_or_default(),
                     token_data: token_data__.unwrap_or_default(),
                     sender: sender__.unwrap_or_default(),
                     receiver: receiver__.unwrap_or_default(),
-                    memo: memo__.unwrap_or_default(),
+                    memo: memo__,
                 })
             }
         }

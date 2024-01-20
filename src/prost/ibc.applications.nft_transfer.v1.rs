@@ -530,11 +530,11 @@ pub struct NonFungibleTokenPacketData {
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
     /// the class_uri of class to be transferred
-    #[prost(string, tag = "2")]
-    pub class_uri: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "2")]
+    pub class_uri: ::core::option::Option<::prost::alloc::string::String>,
     /// the class_data of class to be transferred
-    #[prost(string, tag = "3")]
-    pub class_data: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "3")]
+    pub class_data: ::core::option::Option<::prost::alloc::string::String>,
     /// the non fungible tokens to be transferred
     #[prost(string, repeated, tag = "4")]
     pub token_ids: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
@@ -551,8 +551,8 @@ pub struct NonFungibleTokenPacketData {
     #[prost(string, tag = "8")]
     pub receiver: ::prost::alloc::string::String,
     /// optional memo
-    #[prost(string, tag = "9")]
-    pub memo: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "9")]
+    pub memo: ::core::option::Option<::prost::alloc::string::String>,
 }
 impl ::prost::Name for NonFungibleTokenPacketData {
     const NAME: &'static str = "NonFungibleTokenPacketData";
